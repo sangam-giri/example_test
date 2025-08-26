@@ -1,13 +1,13 @@
-import 'package:mockito/mockito.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:example_proj/src/features/todos/domain/usecases/get_todos.dart';
+import 'package:mockito/mockito.dart';
+import 'package:dartz/dartz.dart';
 import 'package:example_proj/src/features/todos/presentation/bloc/todo_bloc.dart';
 import 'package:example_proj/src/features/todos/presentation/pages/todo_page.dart';
-import 'package:dartz/dartz.dart';
+import 'package:example_proj/src/features/todos/domain/entities/todo.dart';
 
-class MockGetTodos extends Mock implements GetTodos {}
+import 'mocks/get_todos_mocks.mocks.dart'; // <- generated mock
 
 void main() {
   late MockGetTodos mockGetTodos;
@@ -17,7 +17,8 @@ void main() {
   });
 
   testWidgets('renders TodoPage', (tester) async {
-    when(mockGetTodos.execute()).thenAnswer((_) async => Right([]));
+    // properly type-safe stub
+    when(mockGetTodos.execute()).thenAnswer((_) async => Right(<Todo>[]));
 
     await tester.pumpWidget(
       MaterialApp(
